@@ -8,6 +8,8 @@ feature 'User can see currency course' do
   scenario 'User can see course' do
     visit root_path
 
+    save_and_open_page
     expect(page).to have_content('RUB')
+    expect(page).to have_content('USD')
   end
 end
