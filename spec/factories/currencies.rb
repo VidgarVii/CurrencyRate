@@ -1,7 +1,13 @@
 FactoryBot.define do
   factory :currency do
-    name { "MyString" }
-    sign { "MyString" }
-    code { "MyString" }
+    name { "Рубль" }
+    sign { "R" }
+    code { "RUB" }
+  end
+
+  trait :dollar do
+    name { "Доллар" }
+    sign { "$" }
+    code { "USD" }
   end
 end

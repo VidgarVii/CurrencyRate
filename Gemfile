@@ -12,6 +12,9 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'whenever', require: false
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootstrap', '~> 4.3.1'
+gem 'font-awesome-sass', '~> 5.6.1'
+gem 'slim'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -27,7 +30,6 @@ group :test do
 end
 
 group :development do
-  gem 'slim-rails'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
