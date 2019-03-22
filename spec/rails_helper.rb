@@ -7,6 +7,8 @@ require 'rspec/rails'
 require 'rails-controller-testing'
 Rails::Controller::Testing.install
 
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e

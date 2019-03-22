@@ -32,6 +32,8 @@ module DollarRate
     config.generators.system_tests = nil
     config.sass.preferred_syntax = :sass
     config.i18n.fallbacks = [I18n.default_locale]
+    config.autoload_paths << "#{Rails.root}/lib/client"
+    config.autoload_paths += [config.root.join('app')]
 
     config.generators do |g|
       g.test_framework :rspec,
