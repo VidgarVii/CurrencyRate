@@ -24,9 +24,11 @@ ActiveRecord::Schema.define(version: 2019_03_21_160019) do
     t.integer "base_id", null: false
     t.integer "quote_id", null: false
     t.float "price", null: false
+    t.string "pair"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["base_id"], name: "index_currency_pairs_on_base_id"
+    t.index ["pair"], name: "index_currency_pairs_on_pair"
     t.index ["quote_id"], name: "index_currency_pairs_on_quote_id"
   end
 
