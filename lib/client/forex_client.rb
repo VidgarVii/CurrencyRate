@@ -6,12 +6,16 @@ class ForexClient
     @api_key     = Rails.application.credentials.dig(:forex_api, :key)
   end
 
-  def exchange(pairs)
-    response = get_rate(pairs)
+  def exchange(*pairs)
+    response = get_rate(make_pairs(*pairs))
     JSON.parse(response.body)
   end
 
   private
+
+  def make_pairs(*pairs)
+    pairs.join(',')
+  end
 
   def get_rate(pairs)
     @http_client.get do |request|
