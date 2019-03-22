@@ -1,8 +1,8 @@
 .currency-pair
   .currency
     span.currency__code = pair.base.code
-    span.currency__price 1
+    span.currency__price 1 #{pair.base.sign}
   .currency
     span.currency__code = pair.quote.code
-    span.currency__price pair.price
+    span.currency__price #{pair.price} #{pair.quote.sign}
 
