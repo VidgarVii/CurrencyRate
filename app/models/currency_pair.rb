@@ -6,6 +6,10 @@ class CurrencyPair < ApplicationRecord
 
   after_create :make_pair
 
+  def clear_date_force
+    update!(date_force: nil)
+  end
+
   private
 
   def make_pair

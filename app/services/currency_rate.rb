@@ -22,7 +22,7 @@ class Services::CurrencyRate
 
   def update_pairs
     @currency_pairs.each do |object|
-      object.update(price: get_price(object.pair))
+      object.update(price: get_price(object.pair)) if object.date_force.nil?
     end
   end
 

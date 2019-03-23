@@ -27,7 +27,7 @@ class Admin::CurrencyPairsController < Admin::BaseController
   def scheduler_in
     return if pair.errors.any?
 
-    Services::Scheduler.new.update_currency_rate(pair.date_force)
+    Services::Scheduler.new.update_currency_rate(pair)
   end
 
   def publish_course
