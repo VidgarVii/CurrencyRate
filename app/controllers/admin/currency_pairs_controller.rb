@@ -1,6 +1,5 @@
 class Admin::CurrencyPairsController < Admin::BaseController
   after_action :scheduler_in, only: :update
-  after_action :publish_course, only: :update
 
   def edit; end
 
@@ -28,14 +27,5 @@ class Admin::CurrencyPairsController < Admin::BaseController
     return if pair.errors.any?
 
     Services::Scheduler.new.update_currency_rate(pair)
-  end
-
-  def publish_course
-    return if pair.errors.any?
-
-    ActionCable.server.broadcast(
-        'publish_course',
-        { pair_price: pair.price}
-    )
   end
 end

@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 1.hour do
-  CurrencyRateJob.perform_later
+  runner "CurrencyRateJob.perform_now"
 end

@@ -22,8 +22,20 @@ class Services::CurrencyRate
 
   def update_pairs
     @currency_pairs.each do |object|
-      object.update(price: get_price(object.pair)) if object.date_force.nil?
+      return unless object.date_force.nil?
+
+      object.update(price: get_price(object.pair))
     end
+    publish_course(@currency_pairs)
+  end
+
+  def publish_course(pairs)
+    hash_pairs = pairs.pluck(:id, :price).to_h
+
+    ActionCable.server.broadcast(
+        'publish_course',
+        { pairs: hash_pairs }
+    )
   end
 
   def make_array_pairs

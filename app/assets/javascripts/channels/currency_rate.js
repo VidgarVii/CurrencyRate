@@ -7,9 +7,10 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     received(data) {
-      var currencyPrice = document.getElementsByClassName('currency__price')[1];
-      currencyPrice.innerHTML = data.pair_price;
-      console.log(data);
+      var currencyPrice = document.getElementsByClassName('currency__price')[1],
+          pairId = document.getElementsByClassName('currency-pair')[0].dataset.pairId;
+
+      currencyPrice.innerHTML = data.pairs[pairId];
     }
   });
 
