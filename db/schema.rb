@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_03_22_123341) do
 
-  create_table "currency_pairs", force: :cascade do |t|
+  create_table "currencies", force: :cascade do |t|
     t.string "name", null: false
     t.string "sign", null: false
     t.string "code", null: false
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_03_22_123341) do
     t.integer "quote_id", null: false
     t.float "price", null: false
     t.string "pair"
+    t.datetime "date_force"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["base_id"], name: "index_currency_pairs_on_base_id"

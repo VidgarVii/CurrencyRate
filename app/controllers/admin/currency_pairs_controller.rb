@@ -3,6 +3,10 @@ class Admin::CurrencyPairsController < Admin::BaseController
 
   def update
     if pair.update(pair_params)
+      Rufus::Scheduler.singleton.in pair.date_force do
+        CurrencyRateJob.perform_later
+      end
+
       redirect_to root_path
     else
       render :edit
@@ -18,6 +22,6 @@ class Admin::CurrencyPairsController < Admin::BaseController
   end
 
   def pair_params
-    params.require(:currency_pair).permit(:price)
+    params.require(:currency_pair).permit(:price, :date_force)
   end
 end

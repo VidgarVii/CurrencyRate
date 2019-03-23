@@ -12,7 +12,7 @@ currencies = Currency.create!([
                                   { name: 'Евро', sign: '€', code: 'EUR' }
                               ])
 
-pairs = CurrencyPair.create([
+pairs = CurrencyPair.create!([
                                 { base: currencies[1], quote: currencies[0], price: 65.0 },
                                 { base: currencies[1], quote: currencies[2], price: 75.0 },
                                 { base: currencies[2], quote: currencies[1], price: 15.0 },
@@ -20,3 +20,4 @@ pairs = CurrencyPair.create([
 
                             ])
 
+User.create!(email: 'admin@mail.ru', password: '123456', encrypted_password: '123456', admin: true)

@@ -8,5 +8,8 @@ h3 Admin Edit Rate
   .form-group
     = f.label :price
     = f.number_field :price, class: 'form-control'
+  form-group
+    = f.label :date_force
+    = f.datetime_local_field :date_force, class: 'form-control'
   .form-group
     = f.submit

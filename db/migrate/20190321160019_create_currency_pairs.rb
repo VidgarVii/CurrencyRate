@@ -5,7 +5,7 @@ class CreateCurrencyPairs < ActiveRecord::Migration[5.2]
       t.integer :quote_id, foreign_key: true, null: false
       t.float :price, null: false
       t.string :pair
-
+      t.datetime :date_force
       t.timestamps
     end
 
