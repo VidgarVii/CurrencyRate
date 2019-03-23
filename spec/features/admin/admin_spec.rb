@@ -9,7 +9,6 @@ feature 'Admin can visit admin path', "
   given(:dollar) { create(:currency, :dollar) }
   given!(:pair) { CurrencyPair.create(base: dollar, quote: rub, price: 70) }
 
-
   describe 'dont admin redirect to root path' do
     given(:user) { create(:user) }
 

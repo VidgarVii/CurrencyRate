@@ -25,13 +25,9 @@ class Admin::CurrencyPairsController < Admin::BaseController
   end
 
   def scheduler_in
-    return if pair.errors.any? || Rails.env.test?
+    return if pair.errors.any?
 
-    $scheduler.at_jobs.map(&:unschedule)
-
-    $scheduler.in pair.date_force do
-      CurrencyRateJob.perform_later
-    end
+    Services::Scheduler.new.update_currency_rate(pair.date_force)
   end
 
   def publish_course
