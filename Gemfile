@@ -18,6 +18,7 @@ gem 'font-awesome-sass', '~> 5.6.1'
 gem 'devise'
 gem 'faraday', '~> 0.9.2'
 gem 'rufus-scheduler', '~> 3.5', '>= 3.5.2'
+gem 'whenever'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
