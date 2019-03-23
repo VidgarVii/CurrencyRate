@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CourseController, type: :controller do
+RSpec.describe CurrencyPairsController, type: :controller do
   let(:rub) { create(:currency) }
   let(:dollar) { create(:currency, :dollar) }
   let!(:pair) { CurrencyPair.create(base: dollar, quote: rub, price: 70) }
@@ -12,8 +12,8 @@ RSpec.describe CourseController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it 'render template index' do
-      assert_template 'course/index'
+    it 'render template edit' do
+      assert_template 'currency_pairs/index'
     end
 
     it 'assign @pair' do

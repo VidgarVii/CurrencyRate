@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_03_22_123341) do
 
-  create_table "currencies", force: :cascade do |t|
+  create_table "currency_pairs", force: :cascade do |t|
     t.string "name", null: false
     t.string "sign", null: false
     t.string "code", null: false

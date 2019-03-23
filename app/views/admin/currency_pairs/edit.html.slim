@@ -1,0 +1,12 @@
+h1.center Currency Rate
+
+h3 Admin Edit Rate
+
+= form_with model: pair, url: admin_path, local: true do |f|
+  = render 'shared/error', resource: pair
+  h5 = pair.pair
+  .form-group
+    = f.label :price
+    = f.number_field :price, class: 'form-control'
+  .form-group
+    = f.submit
