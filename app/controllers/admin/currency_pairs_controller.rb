@@ -1,12 +1,11 @@
 class Admin::CurrencyPairsController < Admin::BaseController
+  after_action :scheduler_in, only: :update
+  after_action :publish_course, only: :update
+
   def edit; end
 
   def update
     if pair.update(pair_params)
-      Rufus::Scheduler.singleton.in pair.date_force do
-        CurrencyRateJob.perform_later
-      end
-
       redirect_to root_path
     else
       render :edit
@@ -23,5 +22,24 @@ class Admin::CurrencyPairsController < Admin::BaseController
 
   def pair_params
     params.require(:currency_pair).permit(:price, :date_force)
+  end
+
+  def scheduler_in
+    return if pair.errors.any? || Rails.env.test?
+
+    $scheduler.at_jobs.map(&:unschedule)
+
+    $scheduler.in pair.date_force do
+      CurrencyRateJob.perform_later
+    end
+  end
+
+  def publish_course
+    return if pair.errors.any?
+
+    ActionCable.server.broadcast(
+        'publish_course',
+        { pair_price: pair.price}
+    )
   end
 end

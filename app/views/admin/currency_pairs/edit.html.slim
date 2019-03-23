@@ -7,7 +7,7 @@ h3 Admin Edit Rate
   h5 = pair.pair
   .form-group
     = f.label :price
-    = f.number_field :price, class: 'form-control'
+    = f.number_field :price, class: 'form-control', step: :any
   form-group
     = f.label :date_force
     = f.datetime_local_field :date_force, class: 'form-control'
