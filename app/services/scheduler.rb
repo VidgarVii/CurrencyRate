@@ -14,6 +14,6 @@ class Services::Scheduler
   private
 
   def handle
-    Rufus::Scheduler.singleton
+    @handle ||= Rufus::Scheduler.singleton
   end
 end
