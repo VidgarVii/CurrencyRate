@@ -10,7 +10,7 @@ document.addEventListener('turbolinks:load', () => {
       var currencyPrice = document.getElementsByClassName('currency__price')[1],
           pairId = document.getElementsByClassName('currency-pair')[0].dataset.pairId;
 
-      currencyPrice.innerHTML = data.pairs[pairId];
+      currencyPrice.innerHTML = `${data.pairs[pairId]} ₽`;
     }
   });
 
