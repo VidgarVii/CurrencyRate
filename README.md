@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Показывает курс валют USDRUB
 
-Things you may want to cover:
+Администратор в админ панели, может указать свой форсированный курс и время жизни форсированного курса. После истечения времени, курс обновиться на реальный. 
 
-* Ruby version
+Актуальный курс валют сайт получает через api forex. (Надо предварительно зарегистрироваться в forex и получить токен.)
 
-* System dependencies
+Курс на странице меняется через action cable. (страницу обновлять не надо)
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Для планировки задач используется gem rufus scheduler
