@@ -1,5 +1,6 @@
 class Admin::CurrencyPairsController < Admin::BaseController
   after_action :scheduler_in, only: :update
+  after_action :publish_course, only: :update
 
   def edit; end
 
@@ -27,5 +28,14 @@ class Admin::CurrencyPairsController < Admin::BaseController
     return if pair.errors.any?
 
     Services::Scheduler.new.update_currency_rate(pair)
+  end
+
+  def publish_course
+    hash_pairs = CurrencyPair.pluck(:id, :price).to_h
+
+    ActionCable.server.broadcast(
+        'publish_course',
+        { pairs: hash_pairs }
+    )
   end
 end
