@@ -1,36 +1,27 @@
 class Services::CurrencyRate
-  def initialize
-    @currency_pairs ||= CurrencyPair.all
-    @response = []
-  end
 
   def call
     @response = client.exchange(make_array_pairs)
     update_pairs
+    publish_course
   end
 
   private
 
   def get_price(pair)
-    price = nil
-    @response.each do |hash|
-      price = hash['price'] if hash['symbol'] == pair
-    end
-
-    price.round(2)
+    @response.find { |hash| hash['symbol'] == pair }['price'].round(2)
   end
 
   def update_pairs
-    @currency_pairs.each do |object|
+    CurrencyPair.all.each do |object|
       return unless object.date_force.nil?
 
       object.update(price: get_price(object.pair))
     end
-    publish_course(@currency_pairs)
   end
 
-  def publish_course(pairs)
-    hash_pairs = pairs.pluck(:id, :price).to_h
+  def publish_course
+    hash_pairs = CurrencyPair.pluck(:id, :price).to_h
 
     ActionCable.server.broadcast(
         'publish_course',
@@ -39,7 +30,7 @@ class Services::CurrencyRate
   end
 
   def make_array_pairs
-    @currency_pairs.pluck(:pair)
+    CurrencyPair.pluck(:pair)
   end
 
   def client

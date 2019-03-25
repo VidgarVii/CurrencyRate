@@ -7,10 +7,6 @@ describe Services::CurrencyRate do
 
   subject { Services::CurrencyRate.new }
 
-  it '#call' do
-    expect(subject.call.size).to eq CurrencyPair.count
-  end
-
   it 'update price for currency pairs' do
     subject.call
     pair.reload
