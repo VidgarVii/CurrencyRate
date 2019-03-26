@@ -1,8 +1,10 @@
 .currency-pair[data-pair-id="#{pair.id}"]
   = react_component("CurrencyPair", { code: pair.base.code,
                                       price: 1,
-                                      sign: pair.base.sign })
+                                      sign: pair.base.sign,
+                                      pairList: [1, 2, 3]})
 
   = react_component("CurrencyPair", {code: pair.quote.code,
-          price: pair.price,
-          sign: pair.quote.sign})
+                                     price: pair.price,
+                                     sign: pair.quote.sign,
+                                     pairList: [1, 2, 3]})
