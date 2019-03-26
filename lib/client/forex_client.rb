@@ -9,10 +9,6 @@ class ForexClient
 
   private
 
-  def http_client
-    Faraday.new(url: ROOT_ENDPOINT)
-  end
-
   def make_pairs(*pairs)
     pairs.join(',')
   end
