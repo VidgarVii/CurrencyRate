@@ -2,72 +2,76 @@
 
 class Services::ParserCurrencyPair
   def run
-    CurrencyPair.delete_all
-    p found_pairs
-    # found_pairs.each do |pair|
-    #   p pair
-    #   base  = Currency.find_by(code: pair[:base])
-    #   quote = Currency.find_by(code: pair[:quote])
-    #
-    #   CurrencyPair.create(base: base, qoute: quote, price: pair[:price])
-    # end
+    destroy_invalid_pairs_on_db
+
+    found_pairs.each do |pair|
+      CurrencyPair.create!(base: get_base(pair), quote: get_quote(pair), price: pair[:price])
+    end
   end
 
   private
 
+  def get_quote(pair)
+    Currency.find_by(code: pair[:quote])
+  end
+
+  def get_base(pair)
+    Currency.find_by(code: pair[:base])
+  end
+
   # => [{base: 'USD', quote: 'RUB', price: 100}, ...]
   def found_pairs
-    @pairs = []
+    pairs = []
     currency_pair = {}
 
-    currency_code.each do |code|
-      current_pairs_for(code).reduce do |pair|
-        code_neighbor = neighbor(pair, code)
-        p code_neighbor
-        return unless neighbor_exists?(code_neighbor)
+    valid_response_pairs.each do |pair|
+      currency_pair[:base] = pair.first
+      currency_pair[:quote] = pair.last
+      currency_pair[:price] = get_price(pair)
 
-        currency_pair[:base]  = base?(code, pair) ? code : code_neighbor
-        currency_pair[:quote] = base?(code_neighbor, pair) ? code_neighbor : code
-        currency_pair[:price] = get_price(pair)
-
-        @pairs << currency_pair
-      end
+      pairs << currency_pair
     end
 
-    @pairs
+    pairs
+  end
+
+  def destroy_invalid_pairs_on_db
+    codes = CurrencyPair.pluck(:pair) - make_currency_pairs
+    CurrencyPair.where(pair: codes).delete_all
   end
 
   def get_price(pair)
     response.detect { |k| k['symbol'] == pair.join }['price'].round(2)
   end
 
-  def base?(currency_code, pair)
-    pair.index(currency_code).zero?
-  end
-
-  def neighbor(pair, current_code)
-    pair.find { |x| x != current_code }
-  end
-
-  def neighbor_exists?(neighbor)
-    Currency.exists?(code: neighbor)
-  end
-
-  # => [["EUR", "RUB"], ["USD", "RUB"] ...]
-  def current_pairs_for(code)
-    currency_pairs.select { |pair| pair.include?(code) }.map { |x| x.scan(/.{3}/) }
-  end
-
   def currency_code
-    Currency.pluck(:code)
+    @currency_code ||= Currency.pluck(:code)
   end
 
   def response
     @response ||= ForexClient.new.exchange
   end
 
-  # => ["GBPNZD", "AUDCAD", "AUDCHF" ...] not exists on DB
-  def currency_pairs
+  def make_currency_pairs
     response.collect { |currency| currency['symbol'] }
+  end
+
+  # Extract invalid pairs on response
+
+  # => ["GBPNZD", "AUDCAD", "AUDCHF" ...] not exists on DB
+  def response_currency_pairs
+    make_currency_pairs - CurrencyPair.pluck(:pair)
+  end
+
+  # => [["EUR", "RUB"], ["USD", "RUB"], ...]
+  def response_current_pairs_for
+    response_currency_pairs.map { |x| x.scan(/.{3}/) }
+  end
+
+  # [["EUR", "RUB"], ["USD", "RUB"], ...] select include currency_code
+  def valid_response_pairs
+    response_current_pairs_for.select do |pair|
+      (pair - currency_code).size.zero?
+    end
   end
 end
