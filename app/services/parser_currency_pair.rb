@@ -4,7 +4,7 @@ class Services::ParserCurrencyPair
   def run
     destroy_invalid_pairs_on_db
 
-    found_pairs.each do |pair|
+    make_found_pairs.each do |pair|
       CurrencyPair.create!(base: get_base(pair), quote: get_quote(pair), price: pair[:price])
     end
   end
@@ -20,7 +20,7 @@ class Services::ParserCurrencyPair
   end
 
   # => [{base: 'USD', quote: 'RUB', price: 100}, ...]
-  def found_pairs
+  def make_found_pairs
     pairs = []
     currency_pair = {}
 
@@ -44,8 +44,8 @@ class Services::ParserCurrencyPair
     response.detect { |k| k['symbol'] == pair.join }['price'].round(2)
   end
 
-  def currency_code
-    @currency_code ||= Currency.pluck(:code)
+  def currency_codes
+    @currency_codes ||= Currency.pluck(:code)
   end
 
   def response
@@ -68,10 +68,10 @@ class Services::ParserCurrencyPair
     response_currency_pairs.map { |x| x.scan(/.{3}/) }
   end
 
-  # [["EUR", "RUB"], ["USD", "RUB"], ...] select include currency_code
+  # [["EUR", "RUB"], ["USD", "RUB"], ...] select include currency_codes
   def valid_response_pairs
     response_current_pairs_for.select do |pair|
-      (pair - currency_code).size.zero?
+      (pair - currency_codes).size.zero?
     end
   end
 end
