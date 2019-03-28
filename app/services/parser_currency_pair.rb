@@ -21,18 +21,18 @@ class Services::ParserCurrencyPair
 
   # => [{base: 'USD', quote: 'RUB', price: 100}, ...]
   def make_found_pairs
-    pairs = []
-    currency_pair = {}
+    @pairs = []
 
     valid_response_pairs.each do |pair|
+      currency_pair = {}
       currency_pair[:base] = pair.first
       currency_pair[:quote] = pair.last
       currency_pair[:price] = get_price(pair)
 
-      pairs << currency_pair
+      @pairs << currency_pair
     end
 
-    pairs
+    @pairs
   end
 
   def destroy_invalid_pairs_on_db
@@ -44,10 +44,6 @@ class Services::ParserCurrencyPair
     response.detect { |k| k['symbol'] == pair.join }['price'].round(2)
   end
 
-  def currency_codes
-    @currency_codes ||= Currency.pluck(:code)
-  end
-
   def response
     @response ||= ForexClient.new.exchange
   end
@@ -56,21 +52,25 @@ class Services::ParserCurrencyPair
     response.collect { |currency| currency['symbol'] }
   end
 
+  def currency_codes
+    @currency_codes ||= Currency.pluck(:code)
+  end
+
   # Extract invalid pairs on response
 
   # => ["GBPNZD", "AUDCAD", "AUDCHF" ...] not exists on DB
-  def response_currency_pairs
+  def delete_exists_pairs_in_response
     make_currency_pairs - CurrencyPair.pluck(:pair)
   end
 
   # => [["EUR", "RUB"], ["USD", "RUB"], ...]
-  def response_current_pairs_for
-    response_currency_pairs.map { |x| x.scan(/.{3}/) }
+  def split_into_pairs_response
+    delete_exists_pairs_in_response.map { |x| x.scan(/.{3}/) }
   end
 
   # [["EUR", "RUB"], ["USD", "RUB"], ...] select include currency_codes
   def valid_response_pairs
-    response_current_pairs_for.select do |pair|
+    split_into_pairs_response.select do |pair|
       (pair - currency_codes).size.zero?
     end
   end
