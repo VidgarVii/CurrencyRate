@@ -64,7 +64,6 @@ feature 'Admin can visit admin path', "
           visit admin_path
 
           fill_in 'Price', with: '10'
-          fill_in 'Date force', with: '2019-03-25T19:26:00'
           click_on 'Update Currency pair'
 
           expect(page).to_not have_content 'Admin'

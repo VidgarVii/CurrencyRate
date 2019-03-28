@@ -33,6 +33,7 @@ group :test do
   gem 'shoulda-matchers', '4.0.0.rc1'
   gem 'rails-controller-testing'
   gem 'launchy'
+  # save_and_open_page
 end
 
 group :development do
