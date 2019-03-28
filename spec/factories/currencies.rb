@@ -10,4 +10,10 @@ FactoryBot.define do
     sign { "$" }
     code { "USD" }
   end
+
+  trait :euro do
+    name { "Евро" }
+    sign { "e" }
+    code { "EUR" }
+  end
 end
