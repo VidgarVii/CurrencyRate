@@ -1,8 +1,9 @@
-.currency-pair
-  border: 1px solid #c1b8b8
-  width:  500px
-  margin: 100px auto
+.currency_pair
+  border:        1px solid #c1b8b8
+  width:         500px
+  margin:        100px auto
   border-radius: 10px
+  position:      relative
 
   .currency
     margin:          30px
@@ -12,6 +13,7 @@
     &__code
       background-color: #cdd0f7
       padding:          10px 20px
+      cursor:           pointer
 
     &__price
       border:      1px solid rgba(46, 46, 46, 0.95)
@@ -29,4 +31,29 @@ form
   width: 400px
   margin: auto
 
+.currency_list
+  padding:          5px 0
+  list-style:       none
+  height:           300px
+  width:            70px
+  box-shadow:       0 0 5px #656565
+  overflow:         auto
+  position:         absolute
+  left:             65px
+  background-color: #fff
+
+  a:hover
+    text-decoration: none
+
+  li
+    cursor:   pointer
+    margin:   auto
+    padding:  0 10px
+    &:hover
+      background-color: #a5d81182
+
+.quote_position
+  top: 155px
+.base_position
+  top: 80px
 

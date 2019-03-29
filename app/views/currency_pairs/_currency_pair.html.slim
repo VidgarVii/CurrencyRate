@@ -1,11 +1,9 @@
-.currency-pair
-
-  = react_component('CurrencyPair', { pairs: pair } )
-
-  / .currency
-  /   span.currency__code = pair.base.code
-  /   span.currency__price 1 #{pair.base.sign}
-  / .currency
-  /   span.currency__code = pair.quote.code
-  /   span.currency__price #{pair.price} #{pair.quote.sign}
-
+.currency_pair
+  #base.currency
+    span.currency__code = pair.base.code
+    span.currency__price 1 #{pair.base.sign}
+  #quote.currency
+    span.currency__code = pair.quote.code
+    span.currency__price #{pair.price} #{pair.quote.sign}
+  ul.currency_list.hidden
+    = render currencies

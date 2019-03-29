@@ -64,6 +64,7 @@ feature 'Admin can visit admin path', "
           visit admin_path
 
           fill_in 'Price', with: '10'
+          fill_in 'Date force', with: (DateTime.current + 5.minutes).strftime("%m%d%Y\t%I%M%P")
           click_on 'Update Currency pair'
 
           expect(page).to_not have_content 'Admin'

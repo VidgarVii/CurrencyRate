@@ -19,8 +19,6 @@ gem 'devise'
 gem 'faraday', '~> 0.9.2'
 gem 'rufus-scheduler', '~> 3.5', '>= 3.5.2'
 gem 'redis'
-gem 'react-rails'
-gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

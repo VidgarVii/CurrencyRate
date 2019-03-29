@@ -1,0 +1,32 @@
+var currencyBase  = document.getElementById('base').children[0].innerText,
+    currencyQuote = document.getElementById('quote').children[0].innerText,
+    currentCurrency = '<%= @currency.code %>';
+
+
+
+//0 - найти сосоеда
+//1 - найти пару
+//2 - посчитать price
+//3 - вывести на экран price
+
+
+var isBase = () => {
+  return (currentCurrency == currencyBase) ? true : false
+}
+
+var makePair = () => {
+  if (isBase()) {
+    return currentCurrency + currencyQuote;
+  } else {
+    return currencyBase + currentCurrency;
+  }
+}
+console.log('<%= @pairs %>')
+
+//var findPair = (pair) => {
+//  var found = '<%#= @pairs.find_by(code: pair) %>'
+
+//  console.log(found)
+//}
+
+//console.log(findPair(makePair()));
