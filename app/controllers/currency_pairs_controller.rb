@@ -5,7 +5,9 @@ class CurrencyPairsController < ApplicationController
   end
 
   def find_pair
-    @currency = Currency.find(params[:id])
-    @pairs = Currency.find(params[:id]).currency_pairs.as_json
+    pair = params['currency_base'] + params['currency_quote']
+
+    @currency_pairs = CurrencyPair.find_by(pair: pair)
+    render json: @currency_pairs, each_serializer: CurrencySerializer
   end
 end

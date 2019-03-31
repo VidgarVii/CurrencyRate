@@ -1,9 +1,11 @@
-.currency_pair
+
+= form_with url: find_pair_path, class: 'currency_pair' do |f|
   #base.currency
-    span.currency__code = pair.base.code
-    span.currency__price 1 #{pair.base.sign}
+    = f.collection_select :currency_base, @currencies, :code, :code, {}, class: 'currency__code'
+    = f.text_field :price, value: 1, class: 'currency__price'
+    span.currency__sign $
   #quote.currency
-    span.currency__code = pair.quote.code
-    span.currency__price #{pair.price} #{pair.quote.sign}
-  ul.currency_list.hidden
-    = render currencies
+    = f.collection_select :currency_quote, @currencies, :code, :code, {}, class: 'currency__code'
+    = f.text_field :price, value: 1, class: 'currency__price'
+    span.currency__sign $
+    = f.submit class: 'hidden btn-form'

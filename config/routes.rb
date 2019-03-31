@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   root to: 'currency_pairs#index'
 
-  resources :currency_pairs, only: :index do
-    post 'find_pair', on: :member
-  end
+  resources :currency_pairs, only: :index
+
+  post 'find_pair', to: 'currency_pairs#find_pair'
 
   namespace :admin do
     match '/', to: 'currency_pairs#edit',   via: :get
