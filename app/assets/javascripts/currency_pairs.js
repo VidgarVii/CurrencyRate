@@ -4,12 +4,9 @@ document.addEventListener('turbolinks:load', () => {
       formPair    = document.getElementsByClassName('currency_pair')[0],
       btnForm     = document.getElementsByClassName('btn-form')[0];
 
-  let submitForm = () => {
-    btnForm.click();
-  };
+  let submitForm = () => { btnForm.click(); };
 
   for (let item of selectPair) {
     item.addEventListener('change', submitForm)
   }
 });
-

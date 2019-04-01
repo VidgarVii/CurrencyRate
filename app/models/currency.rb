@@ -7,11 +7,4 @@ class Currency < ApplicationRecord
 
   validates :code, length: { is: 3 }
 
-  after_create :create_pair
-
-  private
-
-  def create_pair
-    CurrencyPair.create(base_id: self.id, quote_id: self.id, price: 1)
-  end
 end

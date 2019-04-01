@@ -18,16 +18,4 @@ RSpec.describe Currency, type: :model do
       expect(pair.date_force).to be_nil
     end
   end
-
-  describe '#create_pair' do
-    let(:rub)    { create(:currency) }
-    it 'after create currency should be create own pair' do
-      expect(rub.currency_pairs.count).to eq 1
-    end
-
-    it 'own pair' do
-      expect(rub.currency_pairs.first.base).to eq rub
-      expect(rub.currency_pairs.first.quote).to eq rub
-    end
-  end
 end

@@ -2,8 +2,6 @@
 
 class Services::ParserCurrencyPair
   def run
-    destroy_invalid_pairs_on_db
-
     make_found_pairs.each do |pair|
       CurrencyPair.create!(base: get_base(pair), quote: get_quote(pair), price: pair[:price])
     end
@@ -33,11 +31,6 @@ class Services::ParserCurrencyPair
     end
 
     @pairs
-  end
-
-  def destroy_invalid_pairs_on_db
-    codes = CurrencyPair.pluck(:pair) - make_currency_pairs
-    CurrencyPair.where(pair: codes).delete_all
   end
 
   def get_price(pair)
