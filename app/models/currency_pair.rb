@@ -10,10 +10,6 @@ class CurrencyPair < ApplicationRecord
     update!(date_force: nil)
   end
 
-  def itself_pair?
-    base_id == quote_id
-  end
-
   private
 
   def make_pair
