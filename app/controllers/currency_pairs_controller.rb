@@ -12,7 +12,7 @@ class CurrencyPairsController < ApplicationController
       @currency_pairs = CurrencyPair.find_by(pair: make_pair)
     end
 
-    render json: @currency_pairs, each_serializer: CurrencySerializer
+    render json: @currency_pairs, each_serializer: CurrencyPairSerializer
   end
 
   private

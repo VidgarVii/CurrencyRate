@@ -21,7 +21,7 @@ RSpec.describe CurrencyPairsController, type: :controller do
     end
   end
 
-  describe '#find_pair' do
+  describe '#' do
     let(:call) { post :find_pair, params: { currency_base: 'USD', currency_quote: 'RUB'} }
     let(:call_with_itself) { post :find_pair, params: { currency_base: 'RUB', currency_quote: 'RUB'} }
 
@@ -34,7 +34,7 @@ RSpec.describe CurrencyPairsController, type: :controller do
     it 'return render json with pair itself' do
       call_with_itself
 
-      %w[price pair quote_id base_id].each do |attr|
+      %w[price pair quote base].each do |attr|
         expect(json[attr]).to be_truthy
       end
     end
@@ -42,7 +42,7 @@ RSpec.describe CurrencyPairsController, type: :controller do
     it 'return render json with' do
       call
 
-      %w[id price created_at updated_at pair quote_id base_id].each do |attr|
+      %w[price pair quote base].each do |attr|
         expect(json[attr]).to be_truthy
       end
     end

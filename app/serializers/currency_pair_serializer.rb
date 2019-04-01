@@ -1,5 +1,6 @@
-class CurrencySerializer < ActiveModel::Serializer
-  attributes %i[id pair price]
+class CurrencyPairSerializer < ActiveModel::Serializer
+  attributes %i[pair price]
 
-  has_many :currencies
+  belongs_to :base
+  belongs_to :quote
 end
