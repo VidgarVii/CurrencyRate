@@ -14,7 +14,11 @@ class Admin::CurrencyPairsController < Admin::BaseController
 
   private
 
-  helper_method :pair
+  helper_method :pair, :currencies
+
+  def currencies
+    @currencies ||= Currency.all
+  end
 
   def pair
     @pair ||= CurrencyPair.find_by(pair: 'USDRUB')

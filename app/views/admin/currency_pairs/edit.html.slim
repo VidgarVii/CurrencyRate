@@ -2,8 +2,11 @@ h1.center Currency Rate
 
 h3 Admin Edit Rate
 
-= form_with model: pair, url: admin_path, local: true do |f|
+= form_with model: pair, url: admin_path, class: 'admin', local: true do |f|
   = render 'shared/error', resource: pair
+  .form-group.select
+    = f.collection_select :currency_base, currencies, :code, :code, {prompt: 'USD'}, class: 'form-control'
+    = f.collection_select :currency_quote, currencies, :code, :code, {}, class: 'form-control'
   h5 = pair.pair
   .form-group
     = f.label :price
