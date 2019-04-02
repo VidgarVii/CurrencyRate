@@ -3,9 +3,9 @@
   #base.currency
     = f.collection_select :currency_base, @currencies, :code, :code, {}, class: 'currency__code'
     = f.number_field :price, value: 1, class: 'currency__price', step: :any
-    span.currency__sign $
+    span.currency__sign ₽
   #quote.currency
     = f.collection_select :currency_quote, @currencies, :code, :code, {}, class: 'currency__code'
     = f.number_field :price, value: 1, class: 'currency__price', step: :any
-    span.currency__sign $
+    span.currency__sign ₽
     = f.submit class: 'hidden btn-form'
